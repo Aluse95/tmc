@@ -183,6 +183,17 @@ class Consts
             ],
             "show_route" => true
         ],
+        // [
+        //     "title" => "Giới thiệu",
+        //     "name" => "frontend.introduction",
+        //     "template" => [
+        //         [
+        //             "title" => "Mặc định",
+        //             "name" => "introduction.default"
+        //         ]
+        //     ],
+        //     "show_route" => true
+        // ],
         [
             "title" => "Trang tùy chọn",
             "name" => "frontend.page",

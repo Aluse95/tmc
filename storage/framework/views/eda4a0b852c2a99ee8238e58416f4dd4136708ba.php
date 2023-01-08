@@ -232,7 +232,4 @@
   const tobii = new Tobii();
 </script>
 
-<?php if(isset($web_information->source_code->footer)): ?>
-<?php echo $web_information->source_code->footer; ?>
-
-<?php endif; ?><?php /**PATH C:\xampp\htdocs\xkld\resources\views/frontend/panels/scripts.blade.php ENDPATH**/ ?>
+<?php /**PATH C:\xampp\htdocs\xkld\resources\views/frontend/panels/scripts.blade.php ENDPATH**/ ?>

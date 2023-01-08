@@ -33,6 +33,7 @@ Route::namespace('FrontEnd')->group(function () {
   // Contact
   Route::match(array('GET', 'POST'), 'dai-ly', 'ContactController@branch')->name('frontend.branch');
 
+  Route::get('gioi-thieu', 'ContactController@intro')->name('frontend.page');
   Route::get('lien-he', 'ContactController@index')->name('frontend.contact');
   Route::post('contact', 'ContactController@store')->name('frontend.contact.store');
   // Order

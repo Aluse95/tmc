@@ -26,261 +26,147 @@
 @endphp
 
 @push('style')
-  <style>
-    #content-detail {
-      text-align: justify;
-    }
-
-    #content-detail h2 {
-      font-size: 30px;
-    }
-
-    #content-detail h3 {
-      font-size: 24px;
-    }
-
-    #content-detail h4 {
-      font-size: 18px;
-    }
-
-    #content-detail h5,
-    #content-detail h6 {
-      font-size: 16px;
-    }
-
-    #content-detail p {
-      margin-top: 0;
-      margin-bottom: 0;
-    }
-
-    #content-detail h1,
-    #content-detail h2,
-    #content-detail h3,
-    #content-detail h4,
-    #content-detail h5,
-    #content-detail h6 {
-      margin-top: 0;
-      margin-bottom: .5rem;
-    }
-
-    #content-detail p+h2,
-    #content-detail p+.h2 {
-      margin-top: 1rem;
-    }
-
-    #content-detail h2+p,
-    #content-detail .h2+p {
-      margin-top: 1rem;
-    }
-
-    #content-detail p+h3,
-    #content-detail p+.h3 {
-      margin-top: 0.5rem;
-    }
-
-    #content-detail h3+p,
-    #content-detail .h3+p {
-      margin-top: 0.5rem;
-    }
-
-    #content-detail ul,
-    #content-detail ol {
-      list-style: inherit;
-      padding: 0 0 0 25px;
-
-    }
-
-    #content-detail ul li {
-      display: list-item;
-      list-style: initial;
-    }
-
-    #content-detail ol li {
-      display: list-item;
-      list-style: decimal;
-    }
-
-    .posts-sm .entry-image {
-      width: 75px;
-    }
-
-    #content-detail img {
-      max-width: 100%;
-      width: auto !important;
-    }
-
-    body.light #content-detail p {
-      color: #000 !important;
-      font-weight: 400 !important;
-    }
-  </style>
-@endpush
-
-@push('schema')
-  <script type="application/ld+json">
-  {
-      "@context": "https://schema.org/",
-      "@type": "BlogPosting",
-      "@id": "{{ Request::fullUrl() }}",
-      "mainEntityOfPage": "{{ Request::fullUrl() }}",
-      "headline": "{{$seo_title}}",
-      "name": "{{$seo_title}}",
-      "description": "{{$seo_description}}",
-      "datePublished": "{{$datePublished}}",
-      "dateModified": "{{$dateModified}}",
-      "author": {
-          "@type": "Person",
-          "name": "{{$web_information->information->site_name ?? ''}}",
-          "url": "{{Request::root()}}",
-          "image": {
-              "@type": "ImageObject",
-              "@id": "{{ $web_information->image->logo_header ?? '' }}",
-              "url": "{{ $web_information->image->logo_header ?? '' }}",
-              "height": "125",
-              "width": "125"
-          }
-      },
-      "publisher": {
-          "@type": "Organization",
-          "@id": "{{Request::root()}}",
-          "name": "{{$web_information->information->site_name ?? ''}}",
-          "logo": {
-              "@type": "ImageObject",
-              "@id": "{{ $web_information->image->logo_header ?? '' }}",
-              "url": "{{ $web_information->image->logo_header ?? '' }}",
-              "width": "125",
-              "height": "125"
-          }
-      },
-      "image": {
-          "@type": "ImageObject",
-          "@id": "{{$seo_image}}",
-          "url": "{{$seo_image}}",
-          "height": "362",
-          "width": "388"
-      },
-      "url": "{{ Request::fullUrl() }}",
-      "isPartOf": {
-          "@type" : "Blog",
-           "@id": "{{ $alias_category }}",
-           "name": "{{ $taxonomy_title ?? '' }}",
-           "publisher": {
-               "@type": "Organization",
-               "@id": "{{Request::root()}}",
-               "name": "{{$web_information->information->site_name ?? ''}}"
-           }
-       }
+<style>
+  #content-detail {
+    /* font-family: 'Asap', sans-serif; */
+    text-align: justify;
   }
-  </script>
+
+  #content-detail h2 {
+    font-size: 30px;
+  }
+
+  #content-detail h3 {
+    font-size: 24px;
+  }
+
+  #content-detail h4 {
+    font-size: 18px;
+  }
+
+  #content-detail h5,
+  #content-detail h6 {
+    font-size: 16px;
+  }
+
+  #content-detail p {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  #content-detail h1,
+  #content-detail h2,
+  #content-detail h3,
+  #content-detail h4,
+  #content-detail h5,
+  #content-detail h6 {
+    margin-top: 0;
+    margin-bottom: .5rem;
+  }
+
+  #content-detail p+h2,
+  #content-detail p+.h2 {
+    margin-top: 1rem;
+  }
+
+  #content-detail h2+p,
+  #content-detail .h2+p {
+    margin-top: 1rem;
+  }
+
+  #content-detail p+h3,
+  #content-detail p+.h3 {
+    margin-top: 0.5rem;
+  }
+
+  #content-detail h3+p,
+  #content-detail .h3+p {
+    margin-top: 0.5rem;
+  }
+
+  #content-detail ul,
+  #content-detail ol {
+    list-style: inherit;
+    padding: 0 0 0 50px;
+
+  }
+
+  #content-detail ul li {
+    display: list-item;
+    list-style: initial;
+  }
+
+  #content-detail ol li {
+    display: list-item;
+    list-style: decimal;
+  }
+
+  .posts-sm .entry-image {
+    width: 75px;
+  }
+
+  img {
+    max-width: 100%;
+    width: auto !important;
+  }
+
+  body.light #content-detail p {
+    color: #000 !important;
+    font-weight: 400 !important;
+  }
+</style>
 @endpush
 
 @section('content')
   {{-- Print all content by [module - route - page] without blocks content at here --}}
-  <section id="page-title" class="page-title-parallax page-title-center page-title"
-    style="background-image: url('{{ $image_background }}'); background-size: cover;"
-    data-bottom-top="background-position:0px 300px;" data-top-bottom="background-position:0px -300px;">
-    <div id="particles-line"></div>
-
-    <div class="container clearfix mt-4">
-      {{-- <div class="badge rounded-pill border border-light text-light">{{ $page_title }}</div> --}}
-      <ol class="breadcrumb d-none">
-        <li class="breadcrumb-item"><a href="{{ route('frontend.home') }}">@lang('Home')</a></li>
-        <li class="breadcrumb-item"><a href="{{ $alias_category }}">{{ $taxonomy_title ?? '' }}</a></li>
-      </ol>
-      <h1 >{{ $title }}</h1>
-    </div>
-  </section>
-
-  <section id="content">
-
-    <div class="content-wrap">
-      <div class="container clearfix">
-        <div class="row gutter-40 col-mb-80">
-
-          <div class="postcontent col-lg-9">
-            <div class="single-post mb-0">
-
-              <!-- Single Post
-                            ============================================= -->
-              <div class="entry clearfix">
-
-
-                <!-- Entry Content
-                              ============================================= -->
-                <div class="entry-content mt-0" id="content-detail">
-
-                  {!! $content ?? '' !!}
-                  <!-- Post Single - Content End -->
-
-
-                  <div class="clear"></div>
-
-                  <!-- Post Single - Share
-                                ============================================= -->
-                  <div class="si-share border-0 d-flex justify-content-between align-items-center">
-                    <span>@lang('Share this post'):</span>
-                    <div>
-                      <a href="http://www.facebook.com/sharer/sharer.php?u={{ Request::fullUrl() }}"
-                        class="social-icon si-borderless si-facebook">
-                        <i class="icon-facebook"></i>
-                        <i class="icon-facebook"></i>
-                      </a>
-                      <a href="https://twitter.com/intent/tweet?url={{ Request::fullUrl() }}"
-                        class="social-icon si-borderless si-twitter">
-                        <i class="icon-twitter"></i>
-                        <i class="icon-twitter"></i>
-                      </a>
-                      <a href="https://www.instagram.com/cws/share?url={{ Request::fullUrl() }}"
-                        class="social-icon si-borderless si-instagram">
-                        <i class="icon-instagram"></i>
-                        <i class="icon-instagram"></i>
-                      </a>
-                    </div>
-                  </div><!-- Post Single - Share End -->
-
+  <section class="blog bg-light" id="blog">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8">
+          <div class="blog-single">
+            <div class="post">
+              <!-- Post Content -->
+              <div class="post-content">
+                <div class="post-text px-5 text-justify" id="content-detail">
+                  <div class="mb-5">
+                    <img src="{{ $image }}" alt="">
+                  </div>
+                  
+                  {{ $brief }}
                 </div>
-              </div><!-- .entry end -->
 
-              @if (isset($relatedPosts) && count($relatedPosts) > 0)
-                <h4 class="title-widget text-uppercase">@lang('Related Posts')</h4>
-                <div class="related-posts row posts-md col-mb-30">
-                  @foreach ($relatedPosts as $item)
-                    @php
-                      $title = $item->json_params->title->{$locale} ?? $item->title;
-                      $brief = $item->json_params->brief->{$locale} ?? $item->brief;
-                      $image = $item->image_thumb != '' ? $item->image_thumb : ($item->image != '' ? $item->image : null);
-                      $date = date('d/m/Y', strtotime($item->created_at));
-                      // Viet ham xu ly lay slug
-                      $alias_category = App\Helpers::generateRoute(App\Consts::TAXONOMY['post'], $item->taxonomy_alias ?? $item->taxonomy_title, $item->taxonomy_id);
-                      $alias = App\Helpers::generateRoute(App\Consts::TAXONOMY['post'], $item->alias ?? $title, $item->id, 'detail', $item->taxonomy_title);
-                    @endphp
-                    <div class="entry col-12 col-md-6">
-                      <div class="grid-inner row align-items-center gutter-20">
-                        <div class="col-4 col-xl-5">
-                          <div class="entry-image">
-                            <a href="{{ $alias }}"><img src="{{ $image }}" alt="Blog Single"></a>
-                          </div>
-                        </div>
-                        <div class="col-8 col-xl-7">
-                          <div class="entry-title title-xs nott">
-                            <h3><a href="{{ $alias }}">{{ Str::limit($title, 70) }}</a></h3>
-                          </div>
-                          <div class="entry-content d-none d-xl-block">
-                            {{ Str::limit($brief, 100) }}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  @endforeach
+                <div class="post-footer">
+                  <div class="post-share">
+                    <h5>Share:</h5>
+                    <ul class="list-unstyled social-media">
+                      <li><a href="https://www.instagram.com/cws/share?url={{ Request::fullUrl() }}" class="instagram"><i
+                            class="fa fa-instagram"></i></a></li>
+                      <li><a href="https://twitter.com/intent/tweet?url={{ Request::fullUrl() }}" class="twitter"><i
+                            class="fa fa-twitter"></i></a></li>
+                      <li><a href="http://www.facebook.com/sharer/sharer.php?u={{ Request::fullUrl() }}"><i
+                            class="fa fa-facebook"></i></a></li>
+                    </ul>
+                  </div>
                 </div>
-              @endif
 
+              </div>
             </div>
           </div>
 
-          @include('frontend.components.sidebar.post')
         </div>
+        <div class="col-lg-4">
+          <div class="blog-sidebar">
+            <div class="sidebar-search">
+              <form action="{{ route('frontend.search.index') }}" method="GET">
+                <div class="form-group">
+                  <input type="text" class="form-control" name="keyword" placeholder="Nhập và tìm kiếm..." required>
+                  <button class="search-btn" type="submit"><i class="fa fa-search"></i></button>
+                </div>
+              </form>
+            </div>
 
+            @include('frontend.components.sidebar.post')
+        </div>
       </div>
     </div>
   </section>

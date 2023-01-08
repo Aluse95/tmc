@@ -1,114 +1,117 @@
 @extends('frontend.layouts.default')
 
+@push('style')
+</style>
+  <meta name="google-site-verification" content="Xr6yb1OxcJtOlWdMgzQBC2EzH7PlctYTrXMXngXhp80" />
+
+  <style>
+  .contact .contact-boxes .contact-box {
+    padding: 20px;
+    background: #DEA710;
+    text-align: center;
+    color: #f1f3f1;
+    border-radius: 6px;
+    margin-bottom: 30px;
+    position: relative;
+  }
+  </style>
+
+@endpush
+
 @php
   $page_title = $taxonomy->title ?? ($page->title ?? ($page->name ?? ''));
   $image_background = $taxonomy->json_params->image_background ?? ($web_information->image->background_breadcrumbs ?? '');
 @endphp
-@push('style')
-  <style>
-    .fluid-width-video-wrapper {
-      height: 100%;
-    }
-  </style>
-@endpush
+
 @section('content')
+
   {{-- Print all content by [module - route - page] without blocks content at here --}}
-  <section id="page-title" class="page-title-parallax page-title-center page-title d-none"
-    style="background-image: url('{{ $image_background }}'); background-size: cover; padding: 120px 0;"
-    data-bottom-top="background-position:0px 300px;" data-top-bottom="background-position:0px -300px;">
-    <div id="particles-line"></div>
-
-    <div class="container clearfix mt-4">
-      <h1>{{ $page_title }}</h1>
-    </div>
-  </section>
-
-  {{-- @isset($web_information->source_code->map)
-    <section class="vh-60">
-      {!! $web_information->source_code->map !!}
-    </section>
-  @endisset --}}
-
-  <section id="content">
-    <div class="content-wrap">
-      <div class="container">
-
-        <div class="row gutter-40 col-mb-80">
-          <div class="postcontent col-lg-9">
-
-            <h3>LIÊN HỆ TRỰC TUYẾN</h3>
-
-            <div class="">
-
-              <div class="form-result"></div>
-
-              <form class="mb-0 form_ajax" method="post" action="{{ route('frontend.contact.store') }}">
-                @csrf
-                <div class="form-process">
-                  <div class="css3-spinner">
-                    <div class="css3-spinner-scaler"></div>
+  <section class="contact" id="contact">
+    <div class="container">
+      <i class="flaticon-lotus"></i>
+      <div class="row">
+        <div class="col-xl-12 col-lg-12">
+          <div class="contact-boxes">
+            <div class="row">
+              <div class="col-md-4">
+                <div class="contact-box">
+                  <div class="icon-box">
+                    <i class="fa fa-phone"></i>
+                  </div>
+                  <div class="content-box">
+                    <h5>Điện thoại</h5>
+                    <p><br>{!! $web_information->information->phone ?? '' !!}</p>
                   </div>
                 </div>
-
-                <div class="row">
-                  <div class="col-md-12 form-group">
-                    <label for="name">@lang('Fullname') <small class="text-danger">*</small></label>
-                    <input type="text" id="name" name="name" value="" class="sm-form-control required"
-                      required />
+              </div>
+              <div class="col-md-4">
+                <div class="contact-box two">
+                  <i class="flaticon-lotus"></i>
+                  <div class="icon-box">
+                    <i class="fa fa-envelope-o"></i>
                   </div>
-
-                  <div class="col-md-6 form-group">
-                    <label for="email">Email <small class="text-danger">*</small></label>
-                    <input type="email" id="email" name="email" value=""
-                      class="required email sm-form-control" required />
-                  </div>
-
-                  <div class="col-md-6 form-group">
-                    <label for="phone">@lang('phone') <small class="text-danger">*</small></label>
-                    <input type="text" id="phone" name="phone" value="" class="sm-form-control" required />
-                  </div>
-
-                  <div class="w-100"></div>
-
-                  <div class="col-12 form-group">
-                    <label for="content">@lang('Content') <small class="text-danger">*</small></label>
-                    <textarea class="required sm-form-control" id="content" name="content" rows="6" cols="30" required></textarea>
-                  </div>
-
-
-                  <div class="col-12 form-group">
-                    <button class="button button-border button-rounded button-fill button-green m-0 ls0 text-uppercase"
-                      type="submit" name="submit" value="submit">
-                      <span>Gửi liên hệ</span>
-                    </button>
+                  <div class="content-box">
+                    <h5>Email</h5>
+                    <p><br>{!! $web_information->information->email ?? '' !!}</p>
                   </div>
                 </div>
-
-                <input type="hidden" name="is_type" value="contact">
-
-              </form>
+              </div>
+              <div class="col-md-4">
+                <div class="contact-box">
+                  <div class="icon-box">
+                    <i class="fa fa-map-marker"></i>
+                  </div>
+                  <div class="content-box">
+                    <h5>Địa chỉ</h5>
+                    <p>{!! $web_information->information->address ?? '' !!}</p>
+                  </div>
+                </div>
+              </div>
             </div>
-
-          </div><!-- .postcontent end -->
-
-          <div class="sidebar col-lg-3">
-            <address>
-              <strong>@lang('address'):</strong><br>
-              {!! $web_information->information->address ?? '' !!}
-            </address>
-            <abbr title="Phone Number">
-              <strong>@lang('phone'):</strong>
-            </abbr>
-            {!! $web_information->information->phone ?? '' !!}<br>
-            <abbr title="Email Address"><strong>Email:</strong></abbr>
-            {!! $web_information->information->email ?? '' !!}
-
-          </div><!-- .sidebar end -->
+          </div>
         </div>
+        <div class="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1">
+          <form class="contact-form form_ajax" method="post" action="{{ route('frontend.contact.store') }}">
+            @csrf
+            <div class="form-group">
+              <input type="text" class="form-control" id="name" name="name" required value=""
+                autocomplete="off" onkeyup="this.setAttribute('value', this.value);" />
+              <label for="name">Họ và tên *</label>
+              <span class="input-border"></span>
+            </div>
+            <div class="form-group">
+              <input type="email" class="form-control" id="email" name="email" value="" autocomplete="off"
+                onkeyup="this.setAttribute('value', this.value);" />
+              <label for="email">Email</label>
+              <span class="input-border"></span>
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control" id="phone" name="phone" required value=""
+                autocomplete="off" onkeyup="this.setAttribute('value', this.value);" />
+              <label for="subject">@lang('address'):</label>
+              <span class="input-border"></span>
+            </div>
+            <div class="form-group">
+              <textarea class="form-control" id="content" name="content" required data-value="" autocomplete="off"
+                onkeyup="this.setAttribute('data-value', this.value);"></textarea>
+              <label for="message">Nội dung *</label>
+              <span class="input-border"></span>
+            </div>
+            <!-- Button Send Message  -->
+            <input type="hidden" name="is_type" value="contact">
+            <button class="contact-btn main-btn" type="submit" name="send">
+              <span>Gửi liên hệ</span>
+            </button>
+            <!-- Form Message  -->
+            <div class="form-message text-center"><span></span></div>
 
+            <input type="hidden" name="is_type" value="contact">
+          </form>
+        </div>
       </div>
     </div>
   </section>
+
 
   {{-- End content --}}
 @endsection

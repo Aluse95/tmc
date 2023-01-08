@@ -232,6 +232,6 @@
   const tobii = new Tobii();
 </script>
 
-@isset($web_information->source_code->footer)
+{{-- @isset($web_information->source_code->footer)
 {!! $web_information->source_code->footer !!}
-@endisset
+@endisset --}}

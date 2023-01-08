@@ -43,8 +43,7 @@
                             if ($item->parent_id == $main_menu->id) {
                                 $title = isset($item->json_params->title->{$locale}) && $item->json_params->title->{$locale} != '' ? $item->json_params->title->{$locale} : $item->name;
                                 $url = $item->url_link;
-                                $active = $url == url()->full() ? 'active' : '';
-                    
+                                $active = $url == '/'.(Request::segment(1)) ? 'active' : '';
                                 $content .= '<li class="' . $active . '"><a class="nav-link" href="' . $url . '"><div>' . $title . '</div></a>';
                     
                                 if ($item->sub > 0) {

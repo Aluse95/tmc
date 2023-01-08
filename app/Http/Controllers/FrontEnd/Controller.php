@@ -98,7 +98,7 @@ class Controller extends BaseController
 
         // Instance for check size of screen
         $this->responseData['agent'] = new Agent();
-
+        // dd($this->responseData);
         return view($view, $this->responseData);
     }
 

@@ -1,99 +1,127 @@
 @extends('frontend.layouts.default')
 
+@push('style')
+  <style>
+    .newsletter {
+      display: none;
+    }
+  </style>
+@endpush
+
 @php
   $page_title = $taxonomy->title ?? ($page->title ?? $page->name);
   $image_background = $taxonomy->json_params->image_background ?? ($web_information->image->background_breadcrumbs ?? '');
   
   $title = $taxonomy->json_params->title->{$locale} ?? ($taxonomy->title ?? null);
+  $brief = $taxonomy->json_params->brief->{$locale} ?? $taxonomy->brief;
+  $content = $taxonomy->json_params->content->{$locale} ?? $taxonomy->content;
   $image = $taxonomy->json_params->image ?? null;
   $seo_title = $taxonomy->json_params->seo_title ?? $title;
   $seo_keyword = $taxonomy->json_params->seo_keyword ?? null;
   $seo_description = $taxonomy->json_params->seo_description ?? null;
   $seo_image = $image ?? null;
 @endphp
-@push('style')
-  <style>
 
-  </style>
-@endpush
 @section('content')
-  {{-- Print all content by [module - route - page] without blocks content at here --}}
-  <section id="page-title" class="page-title-parallax page-title-center page-title"
-    style="background-image: url('{{ $image_background }}'); background-size: cover;"
-    data-bottom-top="background-position:0px 300px;" data-top-bottom="background-position:0px -300px;">
-    <div id="particles-line"></div>
 
-    <div class="container clearfix mt-4">
-      {{-- <div class="badge rounded-pill border border-light text-light">{{ $page_title }}</div> --}}
-      <ol class="breadcrumb d-none">
-        <li class="breadcrumb-item"><a href="{{ route('frontend.home') }}">@lang('Home')</a></li>
-        <li class="breadcrumb-item active" aria-current="page">{{ $page->name ?? '' }}</li>
-      </ol>
-      <h1 class="">{{ $page_title }}</h1>
-    </div>
-  </section>
+  <section class="events bg-light">
+    <div class="container">
+      <div class="row">
+        @foreach ($posts as $item)
+          @php
+            $title_child = $item->json_params->title->{$locale} ?? $item->title;
+            $brief_child = $item->json_params->brief->{$locale} ?? $item->brief;
+            $image_child = $item->image_thumb != '' ? $item->image_thumb : ($item->image != '' ? $item->image : null);
+            // $date = date('H:i d/m/Y', strtotime($item->created_at));
+            $date = date('d', strtotime($item->created_at));
+            $month = date('M', strtotime($item->created_at));
+            $year = date('Y', strtotime($item->created_at));
+            // Viet ham xu ly lay slug
+            $alias_category = App\Helpers::generateRoute(App\Consts::TAXONOMY['post'], $item->taxonomy_alias ?? $item->taxonomy_title, $item->taxonomy_id);
+            $alias = App\Helpers::generateRoute(App\Consts::TAXONOMY['post'], $item->alias ?? $title, $item->id, 'detail', $item->taxonomy_title);
+          @endphp
 
-  <section id="content">
-
-    <div class="content-wrap">
-      <div class="container mb-3">
-
-        <div class="row mb-5 clearfix">
-          <div class="postcontent col-lg-9">
-            <div class="row">
-              @foreach ($posts as $item)
-                @php
-                  $title = $item->json_params->title->{$locale} ?? $item->title;
-                  $brief = $item->json_params->brief->{$locale} ?? $item->brief;
-                  $image = $item->image_thumb != '' ? $item->image_thumb : ($item->image != '' ? $item->image : null);
-                  // $date = date('H:i d/m/Y', strtotime($item->created_at));
-                  $date = date('d', strtotime($item->created_at));
-                  $month = date('M', strtotime($item->created_at));
-                  $year = date('Y', strtotime($item->created_at));
-                  // Viet ham xu ly lay slug
-                  $alias_category = App\Helpers::generateRoute(App\Consts::TAXONOMY['post'], $item->taxonomy_alias ?? $item->taxonomy_title, $item->taxonomy_id);
-                  $alias = App\Helpers::generateRoute(App\Consts::TAXONOMY['post'], $item->alias ?? $title, $item->id, 'detail', $item->taxonomy_title);
-                @endphp
-                <div class="col-md-6">
-                  <article class="entry">
-                    <div class="entry-image mb-3">
-                      <a href="{{ $alias }}"><img src="{{ $image }}" alt="{{ $title }}"></a>
-                      <div class="bg-overlay">
-                        <div class="bg-overlay-content dark" data-hover-animate="fadeIn" data-hover-speed="500">
-                          <a href="{{ $alias }}" class="overlay-trigger-icon bg-light text-dark"
-                            data-hover-animate="fadeIn" data-hover-speed="500"><i class="icon-line-ellipsis"></i></a>
-                        </div>
-                        <div class="bg-overlay-bg dark" data-hover-animate="fadeIn" data-hover-speed="500"></div>
-                      </div>
-                    </div>
-                    <div class="entry-title">
-                      <h3><a href="{{ $alias }}">{{ $title }}</a></h3>
-                    </div>
-                    <div class="entry-meta">
-                      <ul>
-                        <li><i class="icon-line2-folder"></i><a href="{{ $alias_category }}">
-                            {{ $item->taxonomy_title }}</a>
-                        </li>
-                        <li><i class="icon-calendar-times1"></i> {{ $date }} {{ $month }}
-                          {{ $year }}
-                        </li>
-                      </ul>
-                    </div>
-                    <div class="entry-content clearfix">
-                      <p>{{ Str::limit($brief, 100) }}</p>
-                    </div>
-                  </article>
+          <div class="col-lg-6">
+            <div class="event">
+              <div class="event-img">
+                <a href="{{ $alias }}">
+                  <img src="{{ $image_child }}" alt="{{ $title_child }}">
+                </a>
+              </div>
+              <div class="event-content">
+                <div class="event-title">
+                  <a href="{{ $alias }}">
+                    <h4>{{ $title_child }}</h4>
+                  </a>
                 </div>
-              @endforeach
-              {{ $posts->withQueryString()->links('frontend.pagination.default') }}
+                <div class="event-text">
+                  <p></p>
+                </div>
+                <a class="event-more" href="">Xem chi tiết</a>
+              </div>
             </div>
           </div>
 
-          @include('frontend.components.sidebar.post')
+        @endforeach
 
+        {{ $posts->withQueryString()->links('frontend.pagination.default') }}
+        
         </div>
-      </div>
     </div>
   </section>
+
+  <section class="contact bg-light" id="contact">
+    <div class="container-fluid">
+    <div class="row">
+        <div class="col-xl-6 col-lg-12">
+        <img src="{{ $image }}" alt="" style="width: 100%">
+        </div>
+
+        <div class="col-xl-6 col-lg-12">
+        <div class="text-center pb-3">
+            <h2 class="mb-3">{{ $brief }}</h2>
+            <p>{{ $content }}</p>
+        </div>
+        <form class="contact-form form_ajax" method="post" action="{{ route('frontend.contact.store') }}">
+            @csrf
+            <div class="form-group">
+                <input type="text" class="form-control" id="name" name="name" required value=""
+                    autocomplete="off" onkeyup="this.setAttribute('value', this.value);" />
+                <label for="name">Họ và tên *</label>
+                <span class="input-border"></span>
+                </div>
+                <div class="form-group">
+                <input type="email" class="form-control" id="email" name="email" value="" autocomplete="off"
+                    onkeyup="this.setAttribute('value', this.value);" />
+                <label for="email">Email</label>
+                <span class="input-border"></span>
+                </div>
+                <div class="form-group">
+                <input type="text" class="form-control" id="phone" name="phone" required value=""
+                    autocomplete="off" onkeyup="this.setAttribute('value', this.value);" />
+                <label for="subject">Điện thoại *</label>
+                <span class="input-border"></span>
+                </div>
+                <div class="form-group">
+                <textarea class="form-control" id="content" name="content" required data-value="" autocomplete="off"
+                    onkeyup="this.setAttribute('data-value', this.value);"></textarea>
+                <label for="message">Nội dung *</label>
+                <span class="input-border"></span>
+                </div>
+                <!-- Button Send Message  -->
+                <input type="hidden" name="is_type" value="call_request">
+                <button class="contact-btn main-btn" type="submit" name="send">
+                <span>Gửi đăng ký</span>
+                </button>
+                <!-- Form Message  -->
+                <div class="form-message text-center"><span></span>
+            </div>
+        </form>
+        </div>
+
+    </div>
+    </div>
+</section>
+
   {{-- End content --}}
 @endsection

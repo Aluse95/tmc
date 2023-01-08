@@ -16,7 +16,7 @@
     $params['is_featured'] = true;
     $params['is_type'] = App\Consts::POST_TYPE['service'];
     
-    $rows = App\Http\Services\ContentService::getCmsPost($params)->get();
+    $rows = App\Http\Services\ContentService::getCmsPost($params)->take(3)->get();
     
   @endphp
 
@@ -43,7 +43,7 @@
         <div class="col-lg-4">
           <div class="event">
             <div class="event-img">
-              <img src="{{ $image }}" alt="{{ $title }}" />
+              <img style="height: 330px" class="img-fluid w-100" src="{{ $image }}" alt="{{ $title }}" />
             </div>
             <div class="event-content p-3">
               <div class="event-title">
@@ -58,7 +58,7 @@
               </ul>
               <div class="event-text">
                 <p>
-                  {{ $brief }}
+                  {{ Str::limit($brief, 200) }}
                 </p>
               </div>
               <a class="event-more" href="{{ $alias }}">Xem chi tiết</a>
