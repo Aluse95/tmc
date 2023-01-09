@@ -57,12 +57,7 @@
 
                 </li>
               </ul>
-              <div class="event-text">
-                <p>
-                  <?php echo e(Str::limit($brief, 200)); ?>
-
-                </p>
-              </div>
+              
               <a class="event-more" href="<?php echo e($alias); ?>">Xem chi tiết</a>
             </div>
           </div>

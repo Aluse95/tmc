@@ -122,17 +122,47 @@
   <section class="blog bg-light" id="blog">
     <div class="container">
       <div class="row">
-        <div class="col-lg-8">
+        <div class="col-lg-12">
           <div class="blog-single">
             <div class="post">
               <!-- Post Content -->
               <div class="post-content">
-                <div class="post-text px-5 text-justify" id="content-detail">
-                  <div class="mb-5">
-                    <img src="{{ $image }}" alt="">
-                  </div>
-                  
-                  {{ $brief }}
+                <div class="post-text px-3 text-justify" id="content-detail">
+                  @isset($detail->json_params->gallery_video)
+                    @foreach ($detail->json_params->gallery_video as $key => $item)
+                      @if ($item->source != '')
+                        @if (Str::contains($item->source, 'youtu.be') || Str::contains($item->source, 'youtube.com'))
+                          @php
+                            if (Str::contains($item->source, 'v=')) {
+                                $video_code = 'https://www.youtube.com/embed/' . Str::afterLast($item->source, 'v=');
+                            } else {
+                                $video_code = 'https://www.youtube.com/embed/' . Str::afterLast($item->source, '/');
+                            }
+                          @endphp
+                          <p class="pt-3">
+                            <iframe title="{{ $item->title ?? '' }}" width="100%" height="50%" src="{{ $video_code }}"
+                              frameborder="0"
+                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                              allowfullscreen>
+                            </iframe>
+                          </p>
+                          <p class="pt-3 text-center"><strong>{{ $item->title ?? '' }}</strong></p>
+                        @else
+                          <p class="pt-3 center" title="{{ $item->title ?? '' }}">
+                            <video preload="auto" controls style="display: block; width: 100%; height: 500px">
+                              <source src='{{ $item->source ?? '' }}' />
+                            </video>
+                          </p>
+                          <h3 class="pt-3 mt-4 text-center">{{ $item->title ?? '' }}</h3>
+                        @endif
+                      @endif
+                    @endforeach
+                  @endisset
+
+                  @if ($content)
+                      {!! $content !!}
+                  @endif
+
                 </div>
 
                 <div class="post-footer">
@@ -154,7 +184,7 @@
           </div>
 
         </div>
-        <div class="col-lg-4">
+        <div class="col-lg-4 d-none">
           <div class="blog-sidebar">
             <div class="sidebar-search">
               <form action="{{ route('frontend.search.index') }}" method="GET">

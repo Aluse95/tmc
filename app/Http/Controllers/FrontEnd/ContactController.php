@@ -67,7 +67,7 @@ class ContactController extends Controller
                 $contact = Contact::firstOrCreate(
                     [
                         'is_type' => $params['is_type'],
-                        'email' => $params['email']
+                        'phone' => $params['phone']
                     ]
                 );
 

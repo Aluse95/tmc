@@ -16,7 +16,7 @@
     $params['is_featured'] = true;
     $params['is_type'] = App\Consts::POST_TYPE['post'];
     
-    $rows = App\Http\Services\ContentService::getCmsPost($params)->get();
+    $rows = App\Http\Services\ContentService::getCmsPost($params)->take(2)->get();
     
   @endphp
   <section class="events" id="course">
@@ -50,11 +50,11 @@
                     <h4>{{ $title }}</h4>
                   </a>
                 </div>
-                <div class="event-text">
+                {{-- <div class="event-text">
                   <p style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
                     {{ $brief }}
                   </p>
-                </div>
+                </div> --}}
                 <a class="event-more" href="{{ $alias }}">Xem chi tiết</a>
                 <div class="event-date bg-warning">
                   NEW

@@ -122,17 +122,47 @@
   <section class="blog bg-light" id="blog">
     <div class="container">
       <div class="row">
-        <div class="col-lg-8">
+        <div class="col-lg-12">
           <div class="blog-single">
             <div class="post">
               <!-- Post Content -->
               <div class="post-content">
-                <div class="post-text px-5 text-justify" id="content-detail">
-                  <div class="mb-5">
-                    <img src="<?php echo e($image); ?>" alt="">
-                  </div>
-                  
-                  <?php echo e($brief); ?>
+                <div class="post-text px-3 text-justify" id="content-detail">
+                  <?php if(isset($detail->json_params->gallery_video)): ?>
+                    <?php $__currentLoopData = $detail->json_params->gallery_video; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                      <?php if($item->source != ''): ?>
+                        <?php if(Str::contains($item->source, 'youtu.be') || Str::contains($item->source, 'youtube.com')): ?>
+                          <?php
+                            if (Str::contains($item->source, 'v=')) {
+                                $video_code = 'https://www.youtube.com/embed/' . Str::afterLast($item->source, 'v=');
+                            } else {
+                                $video_code = 'https://www.youtube.com/embed/' . Str::afterLast($item->source, '/');
+                            }
+                          ?>
+                          <p class="pt-3">
+                            <iframe title="<?php echo e($item->title ?? ''); ?>" width="100%" height="50%" src="<?php echo e($video_code); ?>"
+                              frameborder="0"
+                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                              allowfullscreen>
+                            </iframe>
+                          </p>
+                          <p class="pt-3 text-center"><strong><?php echo e($item->title ?? ''); ?></strong></p>
+                        <?php else: ?>
+                          <p class="pt-3 center" title="<?php echo e($item->title ?? ''); ?>">
+                            <video preload="auto" controls style="display: block; width: 100%; height: 500px">
+                              <source src='<?php echo e($item->source ?? ''); ?>' />
+                            </video>
+                          </p>
+                          <h3 class="pt-3 mt-4 text-center"><?php echo e($item->title ?? ''); ?></h3>
+                        <?php endif; ?>
+                      <?php endif; ?>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                  <?php endif; ?>
+
+                  <?php if($content): ?>
+                      <?php echo $content; ?>
+
+                  <?php endif; ?>
 
                 </div>
 
@@ -155,7 +185,7 @@
           </div>
 
         </div>
-        <div class="col-lg-4">
+        <div class="col-lg-4 d-none">
           <div class="blog-sidebar">
             <div class="sidebar-search">
               <form action="<?php echo e(route('frontend.search.index')); ?>" method="GET">

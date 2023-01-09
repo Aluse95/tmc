@@ -98,14 +98,13 @@
               <span class="input-border"></span>
             </div>
             <!-- Button Send Message  -->
-            <input type="hidden" name="is_type" value="contact">
+            <input type="hidden" name="is_type" value="call_request">
             <button class="contact-btn main-btn" type="submit" name="send">
               <span>Gửi liên hệ</span>
             </button>
             <!-- Form Message  -->
             <div class="form-message text-center"><span></span></div>
 
-            <input type="hidden" name="is_type" value="contact">
           </form>
         </div>
       </div>

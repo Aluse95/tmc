@@ -128,10 +128,12 @@
               <!-- Post Content -->
               <div class="post-content">
                 <div class="post-text px-5 text-justify" id="content-detail">
-                  <div class="mb-5">
-                    <img style="height: 360px; width:100%" src="{{ $image }}" alt="">
+                  <a href="#" class="pt-3">
+                    <img src="{{ $image }}" alt="">
+                  </a>
+                  <div class="mt-4">
+                    {!! $content !!}
                   </div>
-                  {{ $brief }}
                 </div>
 
                 <div class="post-footer">

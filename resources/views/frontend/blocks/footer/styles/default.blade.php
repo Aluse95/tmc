@@ -1,40 +1,25 @@
 <section class="newsletter bg-light" id="newsletter">
   <div class="container">
-  <div class="newsletter-inner">
-      <div class="row">
-      <div class="col-lg-5">
-          <h2>Đăng ký nhận thông báo</h2>
-          <p>Nhận thông báo mới từ Học viện qua email của bạn</p>
-      </div>
-      <div class="col-lg-7">
-
-          {{-- <div class="widget subscribe-widget clearfix">
-              <h5>Liên hệ với chúng tôi ngay hôm nay!</h5>
-              <form id="widget-subscribe-form" action="" method="post" class="mb-0">
-                @csrf
-                <div class="input-group mx-auto">
-                  <input type="email" id="widget-subscribe-form-email" name="widget-subscribe-form-email"
-                    class="form-control bg-light required email" placeholder="Email của bạn.." style="border-radius: 0px"
-                  />
-                  <button class="button button-large mx-0 my-0" type="submit"><i class="icon-email2"></i></button>
-                </div>
-              </form>
-          </div> --}}
-          
-          <form class="newsletter-form form_ajax" action="{{ route('frontend.contact.store') }}" method="post">
-              @csrf              
+    <div class="newsletter-inner">
+        <div class="row">
+          <div class="col-lg-5">
+              <h2>Đăng ký nhận thông báo</h2>
+              <p>Nhận thông báo mới qua số điện thoại của bạn</p>
+          </div>
+          <div class="col-lg-7">
+            <form class="newsletter-form form_ajax" action="{{ route('frontend.contact.store') }}" method="post">
+              @csrf             
               <div class="form-group">
-                <input type="text" class="form-control" name="phone" placeholder="Nhập email của bạn.." required />
+                <input type="text" class="form-control" name="phone" placeholder="Nhập số điện thoại của bạn" required />
                 <input type="hidden" name="is_type" value="newsletter">
                 <button class="main-btn" type="submit" name="send">
                   <span>Đăng ký</span>
                 </button>
               </div>
-          </form>
-          
-      </div>
-      </div>
-  </div>
+            </form>
+          </div>
+        </div>
+    </div>
   </div>
 </section>
 

@@ -128,11 +128,13 @@
               <!-- Post Content -->
               <div class="post-content">
                 <div class="post-text px-5 text-justify" id="content-detail">
-                  <div class="mb-5">
-                    <img style="height: 360px; width:100%" src="<?php echo e($image); ?>" alt="">
-                  </div>
-                  <?php echo e($brief); ?>
+                  <a href="#" class="pt-3">
+                    <img src="<?php echo e($image); ?>" alt="">
+                  </a>
+                  <div class="mt-4">
+                    <?php echo $content; ?>
 
+                  </div>
                 </div>
 
                 <div class="post-footer">

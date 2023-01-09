@@ -56,11 +56,11 @@
                   <i class="flaticon-clock-circular-outline"></i>{{ date('Y-m-d H:i:s') }}
                 </li>
               </ul>
-              <div class="event-text">
+              {{-- <div class="event-text">
                 <p>
                   {{ Str::limit($brief, 200) }}
                 </p>
-              </div>
+              </div> --}}
               <a class="event-more" href="{{ $alias }}">Xem chi tiết</a>
             </div>
           </div>

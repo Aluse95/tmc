@@ -27,7 +27,7 @@ class ContactController extends Controller
     {
         $params = $request->all();
         $this->responseData['params'] = $params;
-        $params['is_type'] = Consts::CONTACT_TYPE['contact'];
+        $params['is_type'] = Consts::CONTACT_TYPE['newsletter'];
         if (isset($params['created_at_from'])) {
             $params['created_at_from'] = Carbon::createFromFormat('d/m/Y', $params['created_at_from'])->format('Y-m-d');
         }

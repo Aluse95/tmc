@@ -45,11 +45,11 @@
                     <h4>{{ $title }}</h4>
                   </a>
                 </div>
-                <div class="event-text">
+                {{-- <div class="event-text">
                   <p style="text-overflow: ellipsis;
                   overflow: hidden;
                   white-space: nowrap;">{{ $brief }}</p>
-                </div>
+                </div> --}}
                 <a class="event-more" href="{{ $alias }}">Xem chi tiết</a>
               </div>
             </div>

@@ -13,92 +13,51 @@
 <?php $__env->stopPush(); ?>
 <?php $__env->startSection('content'); ?>
   
-  <section id="page-title" class="page-title-parallax page-title-center page-title"
-    style="background-image: url('<?php echo e($image_background); ?>'); background-size: cover;"
-    data-bottom-top="background-position:0px 300px;" data-top-bottom="background-position:0px -300px;">
-    <div id="particles-line"></div>
 
-    <div class="container clearfix mt-4">
-      
-      <ol class="breadcrumb d-none">
-        <li class="breadcrumb-item"><a href="<?php echo e(route('frontend.home')); ?>"><?php echo app('translator')->get('Home'); ?></a></li>
-        <li class="breadcrumb-item active" aria-current="page"><?php echo e($page_title ?? ''); ?></li>
-      </ol>
-      <h1 class="">
-        <?php echo e($page_title); ?>
+  <section class="events bg-light">
+    <div class="container">
+      <div class="row">
+        <?php $__currentLoopData = $posts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+          <?php
+            $title_child = $item->json_params->title->{$locale} ?? $item->title;
+            $brief_child = $item->json_params->brief->{$locale} ?? $item->brief;
+            $image_child = $item->image_thumb != '' ? $item->image_thumb : ($item->image != '' ? $item->image : null);
+            // $date = date('H:i d/m/Y', strtotime($item->created_at));
+            $date = date('d', strtotime($item->created_at));
+            $month = date('M', strtotime($item->created_at));
+            $year = date('Y', strtotime($item->created_at));
+            // Viet ham xu ly lay slug
+            $alias_category = App\Helpers::generateRoute(App\Consts::TAXONOMY['post'], $item->taxonomy_alias ?? $item->taxonomy_title, $item->taxonomy_id);
+            $alias = App\Helpers::generateRoute(App\Consts::TAXONOMY['post'], $item->alias ?? $title, $item->id, 'detail', $item->taxonomy_title);
+          ?>
 
-        <?php if(isset($params['keyword']) && $params['keyword'] != ''): ?>
-          <?php echo ': ' . $params['keyword']; ?>
-
-        <?php endif; ?>
-      </h1>
-    </div>
-  </section>
-
-
-  <section id="content">
-
-    <div class="content-wrap">
-      <div class="container mb-3">
-
-        <div class="row mb-5 clearfix">
-          <div class="postcontent col-lg-9">
-            <div class="row">
-              <?php $__currentLoopData = $posts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                <?php
-                  $title = $item->json_params->title->{$locale} ?? $item->title;
-                  $brief = $item->json_params->brief->{$locale} ?? $item->brief;
-                  $image = $item->image_thumb != '' ? $item->image_thumb : ($item->image != '' ? $item->image : null);
-                  // $date = date('H:i d/m/Y', strtotime($item->created_at));
-                  $date = date('d', strtotime($item->created_at));
-                  $month = date('M', strtotime($item->created_at));
-                  $year = date('Y', strtotime($item->created_at));
-                  // Viet ham xu ly lay slug
-                  $alias_category = App\Helpers::generateRoute(App\Consts::TAXONOMY['post'], $item->taxonomy_alias ?? $item->taxonomy_title, $item->taxonomy_id);
-                  $alias = App\Helpers::generateRoute(App\Consts::TAXONOMY['post'], $item->alias ?? $title, $item->id, 'detail', $item->taxonomy_title);
-                ?>
-                <div class="col-md-6">
-                  <article class="entry">
-                    <div class="entry-image mb-3">
-                      <a href="<?php echo e($alias); ?>"><img src="<?php echo e($image); ?>" alt="<?php echo e($title); ?>"></a>
-                      <div class="bg-overlay">
-                        <div class="bg-overlay-content dark" data-hover-animate="fadeIn" data-hover-speed="500">
-                          <a href="<?php echo e($alias); ?>" class="overlay-trigger-icon bg-light text-dark"
-                            data-hover-animate="fadeIn" data-hover-speed="500"><i class="icon-line-ellipsis"></i></a>
-                        </div>
-                        <div class="bg-overlay-bg dark" data-hover-animate="fadeIn" data-hover-speed="500"></div>
-                      </div>
-                    </div>
-                    <div class="entry-title">
-                      <h3><a href="<?php echo e($alias); ?>"><?php echo e($title); ?></a></h3>
-                    </div>
-                    <div class="entry-meta">
-                      <ul>
-                        <li><i class="icon-line2-folder"></i><a href="<?php echo e($alias_category); ?>">
-                            <?php echo e($item->taxonomy_title); ?></a>
-                        </li>
-                        <li><i class="icon-calendar-times1"></i> <?php echo e($date); ?> <?php echo e($month); ?>
-
-                          <?php echo e($year); ?>
-
-                        </li>
-                      </ul>
-                    </div>
-                    <div class="entry-content clearfix">
-                      <p><?php echo e(Str::limit($brief, 100)); ?></p>
-                    </div>
-                  </article>
+          <div class="col-lg-6">
+            <div class="event">
+              <div class="event-img">
+                <a href="<?php echo e($alias); ?>">
+                  <img src="<?php echo e($image_child); ?>" alt="<?php echo e($title_child); ?>">
+                </a>
+              </div>
+              <div class="event-content">
+                <div class="event-title">
+                  <a href="<?php echo e($alias); ?>">
+                    <h4><?php echo e($title_child); ?></h4>
+                  </a>
                 </div>
-              <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-              <?php echo e($posts->withQueryString()->links('frontend.pagination.default')); ?>
-
+                <div class="event-text">
+                  <p></p>
+                </div>
+                <a class="event-more" href="<?php echo e($alias); ?>">Xem chi tiết</a>
+              </div>
             </div>
           </div>
 
-          <?php echo $__env->make('frontend.components.sidebar.post', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
+        <?php echo e($posts->withQueryString()->links('frontend.pagination.default')); ?>
+
+        
         </div>
-      </div>
     </div>
   </section>
 

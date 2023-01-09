@@ -1,29 +1,25 @@
 <section class="newsletter bg-light" id="newsletter">
   <div class="container">
-  <div class="newsletter-inner">
-      <div class="row">
-      <div class="col-lg-5">
-          <h2>Đăng ký nhận thông báo</h2>
-          <p>Nhận thông báo mới từ Học viện qua email của bạn</p>
-      </div>
-      <div class="col-lg-7">
-
-          
-          
-          <form class="newsletter-form form_ajax" action="<?php echo e(route('frontend.contact.store')); ?>" method="post">
-              <?php echo csrf_field(); ?>              
+    <div class="newsletter-inner">
+        <div class="row">
+          <div class="col-lg-5">
+              <h2>Đăng ký nhận thông báo</h2>
+              <p>Nhận thông báo mới qua số điện thoại của bạn</p>
+          </div>
+          <div class="col-lg-7">
+            <form class="newsletter-form form_ajax" action="<?php echo e(route('frontend.contact.store')); ?>" method="post">
+              <?php echo csrf_field(); ?>             
               <div class="form-group">
-                <input type="text" class="form-control" name="phone" placeholder="Nhập email của bạn.." required />
+                <input type="text" class="form-control" name="phone" placeholder="Nhập số điện thoại của bạn" required />
                 <input type="hidden" name="is_type" value="newsletter">
                 <button class="main-btn" type="submit" name="send">
                   <span>Đăng ký</span>
                 </button>
               </div>
-          </form>
-          
-      </div>
-      </div>
-  </div>
+            </form>
+          </div>
+        </div>
+    </div>
   </div>
 </section>
 

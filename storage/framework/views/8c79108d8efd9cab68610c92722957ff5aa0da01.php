@@ -31,7 +31,7 @@
         <div class="post-info">
           <h5>
             <a href="<?php echo e($alias); ?>">
-              <?php echo e(Str::limit($brief, 20)); ?>
+              <?php echo e(Str::limit($title, 20)); ?>
 
             </a>
           </h5>
@@ -76,7 +76,7 @@
         <div class="post-info">
           <h5>
             <a href="<?php echo e($alias); ?>">
-              <?php echo e(Str::limit($brief, 20)); ?>
+              <?php echo e(Str::limit($title, 20)); ?>
 
             </a>
           </h5>

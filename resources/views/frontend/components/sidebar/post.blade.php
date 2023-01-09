@@ -31,7 +31,7 @@
         <div class="post-info">
           <h5>
             <a href="{{ $alias }}">
-              {{ Str::limit($brief, 20)  }}
+              {{ Str::limit($title, 20)  }}
             </a>
           </h5>
           <p>{{ $date }}</p>
@@ -75,7 +75,7 @@
         <div class="post-info">
           <h5>
             <a href="{{ $alias }}">
-              {{ Str::limit($brief, 20)  }}
+              {{ Str::limit($title, 20)  }}
             </a>
           </h5>
           <p>{{ $date }}</p>

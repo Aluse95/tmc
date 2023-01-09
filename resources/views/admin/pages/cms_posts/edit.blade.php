@@ -59,6 +59,11 @@
                 </a>
               </li>
               <li>
+                <a href="#tab_2" data-toggle="tab">
+                  <h5>@lang('gallery')</h5>
+                </a>
+              </li>
+              <li>
                 <a href="#tab_3" data-toggle="tab">
                   <h5>Bài viết liên quan</h5>
                 </a>
@@ -192,6 +197,10 @@
                     </div>
                   </div>
 
+                  <div class="col-md-12">
+                    <hr style="border-top: dashed 2px #a94442; margin: 10px 0px;">
+                  </div>
+
                   <div class="col-md-6 hidden">
                     <div class="row">
                       <div class="col-md-6">
@@ -284,6 +293,79 @@
                   </div>
                 </div>
 
+              </div>
+              <div class="tab-pane " id="tab_2">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <input class="btn btn-warning btn-sm add-gallery-image" data-toggle="tooltip"
+                        title="Nhấn để chọn thêm ảnh" type="button" value="Thêm ảnh" />
+                    </div>
+                    <div class="row list-gallery-image">
+                      @isset($detail->json_params->gallery_image)
+                        @foreach ($detail->json_params->gallery_image as $key => $value)
+                          @if ($value != null)
+                            <div class="col-lg-2 col-md-3 col-sm-4 mb-1 gallery-image">
+                              <img class="img-width" src="{{ $value }}">
+                              <input type="text" name="json_params[gallery_image][{{ $key }}]"
+                                class="hidden" id="gallery_image_{{ $key }}" value="{{ $value }}">
+                              <div class="btn-action">
+                                <span class="btn btn-sm btn-success btn-upload lfm mr-5"
+                                  data-input="gallery_image_{{ $key }}">
+                                  <i class="fa fa-upload"></i>
+                                </span>
+                                <span class="btn btn-sm btn-danger btn-remove">
+                                  <i class="fa fa-trash"></i>
+                                </span>
+                              </div>
+                            </div>
+                          @endif
+                        @endforeach
+                      @endisset
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <hr style="border-top: dashed 2px #a94442; margin: 10px 0px;">
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label>@lang('Video list')</label>
+                      <input class="btn btn-warning btn-sm add-gallery-video" data-toggle="tooltip"
+                        title="Nhấn để chọn thêm video" type="button" value="Thêm video" />
+                    </div>
+                    <div class="list-gallery-video">
+                      @isset($detail->json_params->gallery_video)
+                        @foreach ($detail->json_params->gallery_video as $key => $item)
+                          <div class="row gallery-video border-bottom">
+                            <div class="col-md-6 col-xs-12 py-2 ">
+                              <input type="text" name="json_params[gallery_video][{{ $key }}][title]"
+                                class="form-control" id="gallery_video_title_{{ $key }}"
+                                placeholder="Tiêu đề, giới thiệu ngắn..." value="{{ $item->title ?? '' }}">
+                            </div>
+                            <div class="col-md-5 col-xs-10 py-2 ">
+                              <div class="input-group">
+                                <span class="input-group-btn">
+                                  <a data-input="gallery_video_source_{{ $key }}" class="btn btn-primary video">
+                                    <i class="fa fa-file-video-o"></i> @lang('choose')
+                                  </a>
+                                </span>
+                                <input id="gallery_video_source_{{ $key }}" class="form-control" type="text"
+                                  name="json_params[gallery_video][{{ $key }}][source]"
+                                  placeholder="Link video..." value="{{ $item->source ?? '' }}" required>
+                              </div>
+                            </div>
+                            <div class="col-md-1 col-xs-2 py-2 ">
+                              <span class="btn btn-sm btn-danger btn-remove" data-toggle="tooltip"
+                                title="@lang('delete')">
+                                <i class="fa fa-trash"></i>
+                              </span>
+                            </div>
+                          </div>
+                        @endforeach
+                      @endisset
+                    </div>
+                  </div>
+                </div>
               </div>
               <div class="tab-pane " id="tab_3">
                 <div class="row">
@@ -521,6 +603,99 @@
           event.preventDefault();
           $(".btn_add_tags").click();
         }
+      });
+
+      var no_image_link = '{{ url('themes/admin/img/no_image.jpg') }}';
+
+      $('.add-gallery-image').click(function(event) {
+        let keyRandom = new Date().getTime();
+        let elementParent = $('.list-gallery-image');
+        let elementAppend =
+          '<div class="col-lg-2 col-md-3 col-sm-4 mb-1 gallery-image my-15">';
+        elementAppend += '<img class="img-width"';
+        elementAppend += 'src="' + no_image_link + '">';
+        elementAppend += '<input type="text" name="json_params[gallery_image][' + keyRandom +
+          ']" class="hidden" id="gallery_image_' + keyRandom +
+          '">';
+        elementAppend += '<div class="btn-action">';
+        elementAppend += '<span class="btn btn-sm btn-success btn-upload lfm mr-5" data-input="gallery_image_' +
+          keyRandom +
+          '" data-type="cms-image">';
+        elementAppend += '<i class="fa fa-upload"></i>';
+        elementAppend += '</span>';
+        elementAppend += '<span class="btn btn-sm btn-danger btn-remove">';
+        elementAppend += '<i class="fa fa-trash"></i>';
+        elementAppend += '</span>';
+        elementAppend += '</div>';
+        elementParent.append(elementAppend);
+
+        $('.lfm').filemanager('image', {
+          prefix: route_prefix
+        });
+      });
+      // Change image for img tag gallery-image
+      $('.list-gallery-image').on('change', 'input', function() {
+        let _root = $(this).closest('.gallery-image');
+        var img_path = $(this).val();
+        _root.find('img').attr('src', img_path);
+      });
+
+      // Delete image
+      $('.list-gallery-image').on('click', '.btn-remove', function() {
+        // if (confirm("@lang('confirm_action')")) {
+        let _root = $(this).closest('.gallery-image');
+        _root.remove();
+        // }
+      });
+
+      $('.list-gallery-image').on('mouseover', '.gallery-image', function(e) {
+        $(this).find('.btn-action').show();
+      });
+      $('.list-gallery-image').on('mouseout', '.gallery-image', function(e) {
+        $(this).find('.btn-action').hide();
+      });
+
+      // Xử lý video input
+      $('.add-gallery-video').click(function(event) {
+        let keyRandom = new Date().getTime();
+        let elementParent = $('.list-gallery-video');
+        let elementAppend = '';
+        elementAppend += '<div class="row gallery-video border-bottom">';
+        elementAppend += '<div class="col-md-6 col-xs-12 py-2 ">';
+        elementAppend += '<input type="text" name="json_params[gallery_video][' + keyRandom +
+          '][title]" class="form-control" id="gallery_video_title_' + keyRandom +
+          '" placeholder="Tiêu đề, giới thiệu ngắn...">';
+        elementAppend += '</div>';
+        elementAppend += '<div class="col-md-5 col-xs-10 py-2 ">';
+        elementAppend += '<div class="input-group">';
+        elementAppend += '<span class="input-group-btn">';
+        elementAppend += '<a data-input="gallery_video_source_' + keyRandom + '" class="btn btn-primary video">';
+        elementAppend += '<i class="fa fa-file-video-o"></i> ';
+        elementAppend += '@lang('choose')';
+        elementAppend += '</a>';
+        elementAppend += '</span>';
+        elementAppend += '<input id="gallery_video_source_' + keyRandom +
+          '" class="form-control" type="text" name = "json_params[gallery_video][' + keyRandom +
+          '][source]" placeholder = "Link video..." required>';
+        elementAppend += '</div>';
+        elementAppend += '</div>';
+        elementAppend += '<div class="col-md-1 col-xs-2 py-2 ">';
+        elementAppend +=
+          '<span class="btn btn-sm btn-danger btn-remove" data-toggle="tooltip" title="@lang('delete')">';
+        elementAppend += '<i class="fa fa-trash"></i>';
+        elementAppend += '</span>';
+        elementAppend += '</div>';
+        elementAppend += '</div>';
+        elementParent.append(elementAppend);
+
+        $('.video').filemanager('video', {
+          prefix: route_prefix
+        });
+      });
+      // Remove
+      $('.list-gallery-video').on('click', '.btn-remove', function() {
+        let _root = $(this).closest('.gallery-video');
+        _root.remove();
       });
 
     });

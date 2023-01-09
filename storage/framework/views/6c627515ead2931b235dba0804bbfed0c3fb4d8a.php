@@ -45,11 +45,7 @@
                     <h4><?php echo e($title); ?></h4>
                   </a>
                 </div>
-                <div class="event-text">
-                  <p style="text-overflow: ellipsis;
-                  overflow: hidden;
-                  white-space: nowrap;"><?php echo e($brief); ?></p>
-                </div>
+                
                 <a class="event-more" href="<?php echo e($alias); ?>">Xem chi tiết</a>
               </div>
             </div>

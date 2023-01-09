@@ -72,7 +72,7 @@
               @endphp
 
               <div class="swiper-slide">
-                <a href="https://www.youtube.com/embed/wuKt0izhWMI" data-type="iframe" class="lightbox"
+                <a href="{{ $content_child }}" data-type="iframe" class="lightbox"
                   style="display: block; overflow: hidden;">
                   <img src="{{ $image_child }}" alt="{{ $title_child }}" />
                   <div class="gallery-box">
