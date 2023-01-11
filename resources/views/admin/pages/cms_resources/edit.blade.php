@@ -331,6 +331,47 @@
                       @endisset
                     </div>
                   </div>
+                  <div class="col-md-12">
+                    <hr style="border-top: dashed 2px #a94442; margin: 10px 0px;">
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label>@lang('Video list')</label>
+                      <input class="btn btn-warning btn-sm add-gallery-video" data-toggle="tooltip"
+                        title="Nhấn để chọn thêm video" type="button" value="Thêm video" />
+                    </div>
+                    <div class="list-gallery-video">
+                      @isset($detail->json_params->gallery_video)
+                        @foreach ($detail->json_params->gallery_video as $key => $item)
+                          <div class="row gallery-video border-bottom">
+                            <div class="col-md-6 col-xs-12 py-2 ">
+                              <input type="text" name="json_params[gallery_video][{{ $key }}][title]"
+                                class="form-control" id="gallery_video_title_{{ $key }}"
+                                placeholder="Tiêu đề, giới thiệu ngắn..." value="{{ $item->title ?? '' }}">
+                            </div>
+                            <div class="col-md-5 col-xs-10 py-2 ">
+                              <div class="input-group">
+                                <span class="input-group-btn">
+                                  <a data-input="gallery_video_source_{{ $key }}" class="btn btn-primary video">
+                                    <i class="fa fa-file-video-o"></i> @lang('choose')
+                                  </a>
+                                </span>
+                                <input id="gallery_video_source_{{ $key }}" class="form-control" type="text"
+                                  name="json_params[gallery_video][{{ $key }}][source]"
+                                  placeholder="Link video..." value="{{ $item->source ?? '' }}" required>
+                              </div>
+                            </div>
+                            <div class="col-md-1 col-xs-2 py-2 ">
+                              <span class="btn btn-sm btn-danger btn-remove" data-toggle="tooltip"
+                                title="@lang('delete')">
+                                <i class="fa fa-trash"></i>
+                              </span>
+                            </div>
+                          </div>
+                        @endforeach
+                      @endisset
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="tab-pane " id="tab_3">

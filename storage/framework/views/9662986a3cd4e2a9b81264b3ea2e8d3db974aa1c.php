@@ -45,7 +45,7 @@
             <div class="event">
               <div class="event-img">
                 <a href="<?php echo e($alias); ?>">
-                  <img src="<?php echo e($image_child); ?>" alt="<?php echo e($title_child); ?>">
+                  <img style="height: 400px; width:100%" src="<?php echo e($image_child); ?>" alt="<?php echo e($title_child); ?>">
                 </a>
               </div>
               <div class="event-content">

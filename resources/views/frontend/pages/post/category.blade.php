@@ -45,7 +45,7 @@
             <div class="event">
               <div class="event-img">
                 <a href="{{ $alias }}">
-                  <img src="{{ $image_child }}" alt="{{ $title_child }}">
+                  <img style="height: 400px; width:100%" src="{{ $image_child }}" alt="{{ $title_child }}">
                 </a>
               </div>
               <div class="event-content">
